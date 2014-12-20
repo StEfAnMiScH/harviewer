@@ -1,4 +1,4 @@
 #!/bin/sh
 
-MYDIR=`cd \`dirname "$0"\`; pwd`
-$MYDIR/../bin/x $MYDIR/build.js "$@"
+MYDIR=$(dirname "$0")
+bash "$MYDIR/../bin/x" "$MYDIR/build.js" "$@"
