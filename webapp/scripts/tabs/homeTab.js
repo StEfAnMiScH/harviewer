@@ -33,7 +33,7 @@ HomeTab.prototype = Lib.extend(TabView.Tab.prototype,
         // Content of this tab is loaded by default (required above) since it's
         // the first thing displayed to the user anyway.
         // Also let's search and replace some constants in the template.
-        body.innerHTML = HomeTabHtml.replace("@HAR_SPEC_URL@", tabView.harSpecURL, "g");
+        body.innerHTML = HomeTabHtml.replace("http://www.softwareishard.com/blog/har-12-spec/", tabView.harSpecURL, "g");
 
         // Register click handlers.
         $("#appendPreview").click(Lib.bindFixed(this.onAppendPreview, this));
