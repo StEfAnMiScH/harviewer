@@ -4,6 +4,7 @@
 *.swp
 *.tmp
 .*.gz
+*.log
 
 # Temporary files created by Eclipse
 .tmp*

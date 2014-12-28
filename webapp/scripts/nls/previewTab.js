@@ -3,7 +3,7 @@
 define(
 {
     "root": {
-        "previewTabLabel": "Preview",
+        "previewTabLabel": "Inspect",
         "showTimelineButton": "Show Page Timeline",
         "hideTimelineButton": "Hide Page Timeline",
         "showTimelineTooltip": "Show/hide statistic preview for selected pages in the timeline.",

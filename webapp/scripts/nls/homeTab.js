@@ -3,7 +3,7 @@
 define(
 {
     "root": {
-        "homeTabLabel": "Home",
+        "homeTabLabel": "Load",
         "loadingHar": "Loading..."
     }
 });

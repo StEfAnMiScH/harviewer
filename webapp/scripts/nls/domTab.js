@@ -3,7 +3,7 @@
 define(
 {
     "root": {
-        "domTabLabel": "HAR",
+        "domTabLabel": "Structure",
         "searchDisabledForIE": "You need Mozilla or WebKit based browser to search in HAR",
         "searchOptionJsonQuery": "JSON Query",
         "tableView": "Table View",
