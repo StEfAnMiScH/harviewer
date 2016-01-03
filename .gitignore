@@ -4,6 +4,7 @@
 *.swp
 *.tmp
 .*.gz
+*.log
 
 # Temporary files created by Eclipse
 .tmp*
@@ -30,3 +31,6 @@
 
 # Extensions
 /extension/firebug@software.joehewitt.com
+
+# Build directory
+webapp-build

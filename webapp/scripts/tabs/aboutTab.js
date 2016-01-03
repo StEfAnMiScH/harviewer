@@ -26,11 +26,7 @@ AboutTab.prototype =
 
     tabHeaderTag:
         A({"class": "$tab.id\\Tab tab", view: "$tab.id", _repObject: "$tab"},
-            "$tab.label",
-            SPAN("&nbsp;"),
-            SPAN({"class": "version"},
-                "$tab.tabView.version"
-            )
+            "$tab.label"
         ),
 
     bodyTag:
@@ -43,7 +39,7 @@ AboutTab.prototype =
         require(["text!tabs/aboutTab.html"], function(html)
         {
             html = html.replace("@VERSION@", tabView.version, "g");
-            html = html.replace("@HAR_SPEC_URL@", tabView.harSpecURL, "g");
+            html = html.replace("http://www.softwareishard.com/blog/har-12-spec/", tabView.harSpecURL, "g");
             body.innerHTML = html;
 
             $(".linkSchema").click(Lib.bind(self.onSchema, self));

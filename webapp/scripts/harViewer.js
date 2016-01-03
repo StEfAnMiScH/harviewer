@@ -8,7 +8,6 @@ define("harViewer", [
     "tabs/homeTab",
     "tabs/aboutTab",
     "tabs/previewTab",
-    "tabs/schemaTab",
     "tabs/domTab",
     "preview/harModel",
     "i18n!nls/harViewer",
@@ -17,7 +16,7 @@ define("harViewer", [
     "core/trace"
 ],
 
-function(TabView, HomeTab, AboutTab, PreviewTab, SchemaTab, DomTab, HarModel,
+function(TabView, HomeTab, AboutTab, PreviewTab, DomTab, HarModel,
     Strings, RequestList, Lib, Trace) {
 
 // ********************************************************************************************* //
@@ -35,7 +34,6 @@ function HarView()
     this.appendTab(new PreviewTab(this.model));
     this.appendTab(new DomTab());
     this.appendTab(new AboutTab());
-    this.appendTab(new SchemaTab());
 }
 
 /**
@@ -56,8 +54,6 @@ function HarView()
  *
  * {@link AboutTab}: Shows some basic information about the HAR Viewer and links to other
  *      resources.
- *
- * {@link SchemaTab}: Shows HAR log schema definition, based on JSON Schema.
  */
 HarView.prototype = Lib.extend(new TabView(),
 /** @lends HarView */
