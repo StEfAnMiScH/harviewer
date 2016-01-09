@@ -7,10 +7,11 @@ define("tabs/aboutTab", [
     "domplate/domplate",
     "domplate/tabView",
     "core/lib",
-    "i18n!nls/harViewer"
+    "i18n!nls/harViewer",
+    "text!tabs/aboutTab.html"
 ],
 
-function(Domplate, TabView, Lib, Strings) { with (Domplate) {
+function(Domplate, TabView, Lib, Strings, AboutTabHtml) { with (Domplate) {
 
 //*************************************************************************************************
 // Home Tab
@@ -36,14 +37,8 @@ AboutTab.prototype =
     {
         var self = this;
         body = this.bodyTag.replace({}, body);
-        require(["text!tabs/aboutTab.html"], function(html)
-        {
-            html = html.replace("@VERSION@", tabView.version, "g");
-            html = html.replace("http://www.softwareishard.com/blog/har-12-spec/", tabView.harSpecURL, "g");
-            body.innerHTML = html;
-
-            $(".linkSchema").click(Lib.bind(self.onSchema, self));
-        });
+        body.innerHTML = AboutTabHtml;
+        $(".linkSchema").click(Lib.bind(self.onSchema, self));
     },
 
     onSchema: function()
