@@ -11,6 +11,7 @@
     bottom: 0px;
     overflow: auto;
     width: 100%;
+    -webkit-user-select: text;
 }
 
 .tabDOMBody .domContent .domBox {

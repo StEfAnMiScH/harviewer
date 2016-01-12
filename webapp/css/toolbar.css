@@ -7,6 +7,7 @@
     font-style: normal;
     border-bottom: 1px solid #EEEEEE;
     padding: 0 3px 0 3px;
+    -webkit-user-select: none;
 }
 
 .toolbarButton,

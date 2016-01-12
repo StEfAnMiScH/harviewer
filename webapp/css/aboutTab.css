@@ -14,6 +14,7 @@
 
 .aboutBody {
     padding: 8px;
+    -webkit-user-select: text;
 }
 
 .tabAboutBody code {

@@ -6,11 +6,10 @@ define("preview/requestBody", [
     "core/lib",
     "core/cookies",
     "domplate/tabView",
-    "core/dragdrop",
-    "syntax-highlighter/shCore"
+    "core/dragdrop"
 ],
 
-function(Domplate, Strings, Lib, Cookies, TabView, DragDrop, dp) { with (Domplate) {
+function(Domplate, Strings, Lib, Cookies, TabView, DragDrop) { with (Domplate) {
 
 //*************************************************************************************************
 // Request Body
@@ -215,18 +214,7 @@ ResponseTab.prototype = domplate(TabView.Tab.prototype,
             var text = this.file.response.content.text;
             var mimeType = this.file.response.content.mimeType;
 
-            // Highlight the syntax if the response is Javascript.
-            if (mimeType == "application/javascript" || mimeType == "text/javascript" ||
-                mimeType == "application/x-javascript" || mimeType == "text/ecmascript" ||
-                mimeType == "application/ecmascript")
-            {
-                responseTextBox.firstChild.innerHTML = text;
-                dp.SyntaxHighlighter.HighlightAll(responseTextBox.firstChild);
-            }
-            else
-            {
-                Lib.insertWrappedText(text, responseTextBox.firstChild);
-            }
+            Lib.insertWrappedText(text, responseTextBox.firstChild);
         }
     }
 });
