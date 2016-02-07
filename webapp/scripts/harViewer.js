@@ -8,7 +8,6 @@ define("harViewer", [
     "tabs/homeTab",
     "tabs/aboutTab",
     "tabs/previewTab",
-    "tabs/domTab",
     "preview/harModel",
     "i18n!nls/harViewer",
     "preview/requestList",
@@ -16,7 +15,7 @@ define("harViewer", [
     "core/trace"
 ],
 
-function(TabView, HomeTab, AboutTab, PreviewTab, DomTab, HarModel,
+function(TabView, HomeTab, AboutTab, PreviewTab, HarModel,
     Strings, RequestList, Lib, Trace) {
 
 // ********************************************************************************************* //
@@ -32,7 +31,6 @@ function HarView()
     // Append tabs
     this.appendTab(new HomeTab());
     this.appendTab(new PreviewTab(this.model));
-    this.appendTab(new DomTab());
     this.appendTab(new AboutTab());
 }
 
@@ -48,9 +46,6 @@ function HarView()
  * {@link PreviewTab}: This tab is used to preview one or more HAR files. The UI is composed
  *      from an expandable list of pages and requests. There is also a graphical timeline
  *      that shows request timings.
- *
- * {@link DomTab}: This tab shows hierarchical structure of the provided HAR file(s) as
- *      an expandable tree.
  *
  * {@link AboutTab}: Shows some basic information about the HAR Viewer and links to other
  *      resources.
@@ -83,7 +78,6 @@ HarView.prototype = Lib.extend(new TabView(),
     {
         var homeTab = this.getTab("Home");
         var previewTab = this.getTab("Preview");
-        var domTab = this.getTab("DOM");
 
         try
         {
@@ -108,22 +102,12 @@ HarView.prototype = Lib.extend(new TabView(),
                 }
             }
 
-            // The input JSON is displayed in the DOM/HAR tab anyway, at least to
-            // allow easy inspection of the content.
-            // Btw. this makes HAR Viewer an effective JSON Viewer, but only if validation
-            // is switched off, otherwise HarModel.parse() throws an exception.
-            if (domTab)
-                domTab.append(input);
         }
         catch (err)
         {
             Trace.exception("HarView.appendPreview; EXCEPTION ", err);
             if (err.errors && previewTab)
                 previewTab.appendError(err);
-
-            // xxxHonza: display JSON tree even if validation throws an exception
-            if (err.input)
-                domTab.append(err.input);
         }
 
         // Select the preview tab in any case.
