@@ -11,6 +11,9 @@ define("preview/requestBody", [
 
 function(Domplate, Strings, Lib, Cookies, TabView, DragDrop) { with (Domplate) {
 
+
+var MAX_IMAGE_HEIGHT = 600;
+
 //*************************************************************************************************
 // Request Body
 
@@ -195,25 +198,25 @@ ResponseTab.prototype = domplate(TabView.Tab.prototype,
             PRE({"class": "javascript:nocontrols:nogutter:", name: "code"})
         ),
 
-    onUpdateBody: function(tabView, body)
-    {
+    onUpdateBody: function (tabView, body) {
         var responseTextBox = Lib.getElementByClass(body, "netInfoResponseText");
 
-        if (this.file.category == "image")
-        {
-            Lib.clearNode(responseTextBox);
+        Lib.clearNode(responseTextBox.firstChild);
 
-            var responseImage = body.ownerDocument.createElement("img");
-            responseImage.src = this.file.href;
+        var text = this.file.response.content.text;
+        var mimeType = this.file.response.content.mimeType;
+        var encoding = this.file.response.content.encoding;
+
+        if (mimeType.indexOf('image/') !== -1 && encoding === 'base64') {
+            var responseImage = document.createElement('IMG');
+            responseImage.src = 'data:' + mimeType + ';base64,' + text;
+
+            if (responseImage.height > MAX_IMAGE_HEIGHT) {
+                responseImage.style.height = MAX_IMAGE_HEIGHT + 'px';
+            }
+            responseTextBox.style.backgroundColor = '#d6d6d6';
             responseTextBox.appendChild(responseImage, responseTextBox);
-        }
-        else
-        {
-            Lib.clearNode(responseTextBox.firstChild);
-
-            var text = this.file.response.content.text;
-            var mimeType = this.file.response.content.mimeType;
-
+        } else {
             Lib.insertWrappedText(text, responseTextBox.firstChild);
         }
     }
