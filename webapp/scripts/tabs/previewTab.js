@@ -10,7 +10,7 @@ define("tabs/previewTab", [
     "i18n!nls/previewTab",
     "domplate/toolbar",
     "tabs/pageTimeline",
-    "tabs/harStats",
+    "tabs/pageStats",
     "preview/pageList",
     "core/cookies",
     "preview/validationError",

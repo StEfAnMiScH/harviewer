@@ -20,7 +20,7 @@
             include: [
                 "nls/harViewer",
                 "nls/homeTab",
-                "nls/harStats",
+                "nls/pageStats",
                 "nls/previewTab",
                 "nls/requestBody",
                 "nls/requestList"

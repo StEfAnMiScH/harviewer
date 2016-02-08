@@ -1,12 +1,12 @@
 /* See license.txt for terms of usage */
 
 /**
- * @module tabs/harStats
+ * @module tabs/pageStats
  */
-define("tabs/harStats", [
+define("tabs/pageStats", [
     "domplate/domplate",
     "core/lib",
-    "i18n!nls/harStats",
+    "i18n!nls/pageStats",
     "preview/harSchema",
     "preview/harModel",
     "core/cookies",
