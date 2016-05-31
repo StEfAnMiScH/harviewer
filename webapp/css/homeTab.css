@@ -10,3 +10,23 @@
 .homeBody {
     padding: 8px;
 }
+
+.overlay {
+    height: 0;
+    width: 100%;
+    position: fixed;
+    z-index: 10;
+    left: 0;
+    top: 30px;
+    background-color: #eaebeb;
+    overflow-x: hidden;
+    opacity: 0.8;
+}
+
+.overlay-content {
+    font-size: 1.2em;
+    position: relative;
+    top: 40%;
+    width: 100%;
+    text-align: center;
+}

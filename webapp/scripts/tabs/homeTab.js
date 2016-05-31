@@ -7,14 +7,21 @@ define("tabs/homeTab", [
     "domplate/domplate",
     "domplate/tabView",
     "core/lib",
-    "core/cookies",
     "core/trace",
     "i18n!nls/homeTab",
     "text!tabs/homeTab.html",
-    "preview/harModel"
+    "preview/harModel",
+    "dnd"
 ],
 
-function(Domplate, TabView, Lib, Cookies, Trace, Strings, HomeTabHtml, HarModel) { with (Domplate) {
+function(Domplate, TabView, Lib, Trace, Strings, HomeTabHtml, HarModel, dnd) { with (Domplate) {
+
+var FILE_READ_OPTIONS = {
+    type: 'openFile',
+    accepts: [
+        { extensions: ['har'] }
+    ]
+};
 
 //*************************************************************************************************
 // Home Tab
@@ -45,22 +52,28 @@ HomeTab.prototype = Lib.extend(TabView.Tab.prototype,
         $("#appendPreview").click(Lib.bindFixed(this.onAppendPreview, this));
         $(".linkAbout").click(Lib.bind(this.onAbout, this));
 
+        var dragOverlay = document.getElementById('file-drop-overlay');
+
+        function dragEnter(event) {
+            dragOverlay.style.height = '100%';
+        }
+
+        function dragLeave(event) {
+            dragOverlay.style.height = null;
+        }
+
         // Registers drag-and-drop event handlers. These will be responsible for
         // auto-loading all dropped HAR files.
-        var content = $("#content");
-        content.bind("dragenter", Lib.bind(Lib.cancelEvent, Lib));
-        content.bind("dragover", Lib.bind(Lib.cancelEvent, Lib));
-        content.bind("drop", Lib.bind(this.onDrop, this));
-
-        // Update validate checkbox and register event handler.
-        this.validateNode = $("#validate");
-        var validate = Cookies.getCookie("validate");
-        if (validate)
-            this.validateNode.prop("checked", (validate == "false") ? false : true);
-        this.validateNode.change(Lib.bind(this.onValidationChange, this))
-
-        // Load examples
-        $(".example").click(Lib.bind(this.onLoadExample, this));
+        dnd('#home-tab', this.handleDrop.bind(this), dragEnter, dragLeave);
+        
+        document.getElementById('select-file').addEventListener('change', function (event) {
+            var fileProcessed = this.handleDrop(event.target);
+            if(fileProcessed) {
+                setTimeout(function() {
+                    event.target.value = '';
+                }, 500);
+            }
+        }.bind(this));
     },
 
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
@@ -78,26 +91,6 @@ HomeTab.prototype = Lib.extend(TabView.Tab.prototype,
     onAbout: function()
     {
         this.tabView.selectTabByName("About");
-    },
-
-    onValidationChange: function()
-    {
-        var validate = this.validateNode.prop("checked");
-        Cookies.setCookie("validate", validate);
-    },
-
-    onLoadExample: function(event)
-    {
-        var e = Lib.fixEvent(event);
-        var path = e.target.getAttribute("path");
-
-        var href = document.location.href;
-        var index = href.indexOf("?");
-        document.location = href.substr(0, index) + "?path=" + path;
-
-        // Show timeline and stats by default if an example is displayed.
-        Cookies.setCookie("timeline", true);
-        Cookies.setCookie("stats", true);
     },
 
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
@@ -119,28 +112,30 @@ HomeTab.prototype = Lib.extend(TabView.Tab.prototype,
 
     handleDrop: function(dataTransfer)
     {
-        if (!dataTransfer)
+        if (!dataTransfer) {
             return false;
+        }
 
         var files = dataTransfer.files;
-        if (!files)
-            return;
-
-        for (var i=0; i<files.length; i++)
-        {
-            var file = files[i];
-            var ext = Lib.getFileExtension(file.name);
-            if (ext.toLowerCase() != "har")
-                continue;
-
-            var self = this;
-            var reader = this.getFileReader(file, function(text)
-            {
-                if (text)
-                    self.onAppendPreview(text);
-            });
-            reader();
+        if (!files) {
+            return false;
         }
+
+        var file = files[0];
+        var ext = Lib.getFileExtension(file.name);
+        if (ext.toLowerCase() != "har") {
+            return false;
+        }
+
+        var self = this;
+        var reader = this.getFileReader(file, function(text) {
+            if (text) {
+                self.onAppendPreview(text);
+            }
+        });
+        reader();
+        
+        return true;
     },
 
     /**

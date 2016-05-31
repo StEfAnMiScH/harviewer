@@ -13,9 +13,7 @@ define("tabs/previewTab", [
     "tabs/pageStats",
     "preview/pageList",
     "core/cookies",
-    "preview/validationError",
-    "downloadify/js/swfobject",
-    "downloadify/src/downloadify"
+    "preview/validationError"
 ],
 
 function(Domplate, TabView, Lib, Strings, Toolbar, Timeline, Stats, PageList, Cookies,
@@ -76,34 +74,6 @@ PreviewTab.prototype = Lib.extend(TabView.Tab.prototype,
 
         if (input && Cookies.getCookie("stats") == "true")
             this.onStats(false);
-
-        this.updateDownloadifyButton();
-    },
-
-    updateDownloadifyButton: function()
-    {
-        // Create download button (using Downloadify)
-        var model = this.model;
-        $(".harDownloadButton").downloadify(
-        {
-            filename: function() {
-                return "netData.har";
-            },
-            data: function() {
-                return model ? model.toJSON() : "";
-            },
-            onComplete: function() {},
-            onCancel: function() {},
-            onError: function() {
-                alert(Strings.downloadError);
-            },
-            swf: "scripts/downloadify/media/downloadify.swf",
-            downloadImage: "css/images/download-sprites.png",
-            width: 16,
-            height: 16,
-            transparent: true,
-            append: false
-        });
     },
 
     getToolbarButtons: function()
@@ -155,7 +125,6 @@ PreviewTab.prototype = Lib.extend(TabView.Tab.prototype,
 
         // Re-render toolbar to update label.
         this.toolbar.render();
-        this.updateDownloadifyButton();
 
         Cookies.setCookie("timeline", visible);
     },
@@ -174,7 +143,6 @@ PreviewTab.prototype = Lib.extend(TabView.Tab.prototype,
 
         // Re-render toolbar to update label.
         this.toolbar.render();
-        this.updateDownloadifyButton();
 
         Cookies.setCookie("stats", visible);
     },
