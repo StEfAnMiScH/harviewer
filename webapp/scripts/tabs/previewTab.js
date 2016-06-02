@@ -90,13 +90,13 @@ PreviewTab.prototype = Lib.extend(TabView.Tab.prototype,
                 label: Strings.showStatsButton,
                 tooltiptext: Strings.showStatsTooltip,
                 command: Lib.bindFixed(this.onStats, this, true)
-            },
+            }/*,
             {
                 id: "clear",
                 label: Strings.clearButton,
                 tooltiptext: Strings.clearTooltip,
                 command: Lib.bindFixed(this.onClear, this)
-            }
+            }*/
         ];
 
         buttons.push({
@@ -149,9 +149,7 @@ PreviewTab.prototype = Lib.extend(TabView.Tab.prototype,
 
     onClear: function()
     {
-        var href = document.location.href;
-        var index = href.indexOf("?");
-        document.location = href.substr(0, index);
+        this.stats.cleanUp();
     },
 
     // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
