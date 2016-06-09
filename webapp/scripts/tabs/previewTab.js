@@ -90,6 +90,11 @@ PreviewTab.prototype = Lib.extend(TabView.Tab.prototype,
                 label: Strings.showStatsButton,
                 tooltiptext: Strings.showStatsTooltip,
                 command: Lib.bindFixed(this.onStats, this, true)
+            },
+            {
+                id: "printPage",
+                label: Strings.printPageButton,
+                command: Lib.bindFixed(this.onPrintPage, this)
             }/*,
             {
                 id: "clear",
@@ -127,6 +132,11 @@ PreviewTab.prototype = Lib.extend(TabView.Tab.prototype,
         this.toolbar.render();
 
         Cookies.setCookie("timeline", visible);
+    },
+
+    onPrintPage: function()
+    {
+        window.print();
     },
 
     onStats: function(animation)

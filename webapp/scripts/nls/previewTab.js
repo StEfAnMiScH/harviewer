@@ -6,6 +6,7 @@ define(
         "previewTabLabel": "Inspect",
         "showTimelineButton": "Show Page Timeline",
         "hideTimelineButton": "Hide Page Timeline",
+        "printPageButton": "Print Page",
         "showTimelineTooltip": "Show/hide statistic preview for selected pages in the timeline.",
         "showStatsButton": "Show Statistics",
         "hideStatsButton": "Hide Statistics",
